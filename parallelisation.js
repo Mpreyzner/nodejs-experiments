@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-function calculateByteSize() {
+function calculateByteSizeSync() {
 	let totalBytes = 0;
 
 	let fileNames = fs.readdirSync(".");
@@ -11,4 +11,24 @@ function calculateByteSize() {
 	console.log(totalBytes);
 }
 
-calculateByteSize();
+calculateByteSizeSync();
+
+function calculateByteSizeAsync() {
+	let totalBytes = 0;
+	fs.readdir(".", function(err, filenames){
+		//let finished = ( == 0);
+		let filesLeft = filenames.length;
+		for (let i = 0; i < filenames.length; i++) {
+			fs.stat("./" + filenames[i], function(err, stats){
+				totalBytes += stats.size;
+				filesLeft--;
+				if (filesLeft == 0) {
+					console.log(totalBytes);
+				}
+			});
+			
+		}
+	});
+}
+
+calculateByteSizeAsync()
