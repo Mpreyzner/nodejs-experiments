@@ -1,11 +1,32 @@
-let fs = require('fs'),
-	processId;
+//sync
 
-let filenames = fs.readdirSync(".")
-for (let i = 0; i < filenames.length; i++) {
-	console.log(filenames[i]);
+const fs = require('fs');
+
+function sync() {
+    let processId;
+
+    let filenames = fs.readdirSync(".")
+    for (let i = 0; i < filenames.length; i++) {
+        console.log(filenames[i]);
+    }
+
+    console.log("Sync Ready.")
+    processId = process.getuid();
 }
 
-console.log("Ready.")
+function asynchro() {
+    fs.readdir(".", function (err, filenames) {
+        let i;
+        for (i = 0; i < filenames.length; i++) {
+            console.log(filenames[i]);
+        }
 
-processId = process.getuid();
+        console.log("Async Ready.")
+    });
+
+    processId = process.getuid();
+}
+
+sync()
+asynchro()
+
