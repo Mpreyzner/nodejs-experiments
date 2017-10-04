@@ -24,9 +24,9 @@ sync()
 let oldFilename = "./processId.txt"
 let newFilename = "./processIdOld.txt"
 
-fs.chmod(oldFilename, 777, function (err) {
-    fs.rename(oldFilename, newFilename, function (err) {
-        fs.lstat(newFilename, function (err, stats) {
+fs.chmod(oldFilename, 777,  err => {
+    fs.rename(oldFilename, newFilename,  err => {
+        fs.lstat(newFilename,  (err, stats) => {
             let isSymLink = stats.isSymbolicLink();
             console.log(isSymLink);
         });
