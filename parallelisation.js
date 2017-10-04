@@ -15,15 +15,16 @@ calculateByteSizeSync();
 
 function calculateByteSizeAsync() {
 	let totalBytes = 0;
-	fs.readdir(".", function(err, filenames){
+	fs.readdir(".", (err, filenames) => {
 		//let finished = ( == 0);
 		let filesLeft = filenames.length;
 		for (let i = 0; i < filenames.length; i++) {
-			fs.stat("./" + filenames[i], function(err, stats){
+			fs.stat("./" + filenames[i], (err, stats) => {
 				totalBytes += stats.size;
 				filesLeft--;
 				if (filesLeft == 0) {
 					console.log(totalBytes);
+					return;
 				}
 			});
 			
